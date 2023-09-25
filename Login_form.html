@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96 animate__animated animate__fadeIn">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-4">Login <i class="fas fa-sign-in-alt"></i></h1>
+        <form id="loginForm">
+            <div class="mb-4">
+                <label for="username" class="block text-gray-600 flex items-center">
+                    <i class="fas fa-user mr-2"></i>
+                    Username
+                </label>
+                <input type="text" id="username" name="username" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400" placeholder="Enter your username">
+                <div id="usernameAlert" class="text-red-500 text-sm mt-1 hidden">Please enter your username.</div>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-600 flex items-center">
+                    <i class="fas fa-lock mr-2"></i>
+                    Password
+                </label>
+                <input type="password" id="password" name="password" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-400" placeholder="Enter your password">
+                <div id="passwordAlert" class="text-red-500 text-sm mt-1 hidden">Please enter your password.</div>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition duration-300 transform hover:scale-105">Login</button>
+        </form>
+        <p class="text-gray-600 mt-4 text-center">Don't have an account? <a href="#" class="text-blue-600 hover:underline">Sign Up</a></p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#loginForm").submit(function (event) {
+                event.preventDefault();
+
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                $("#usernameAlert").addClass("hidden");
+                $("#passwordAlert").addClass("hidden");
+
+                if (username === "") {
+                    $("#usernameAlert").removeClass("hidden").text("Please enter your username.");
+                } else if (username.length < 6  || !/\d/.test(username)) {
+                    $("#usernameAlert").removeClass("hidden").text("Invalid username format.");
+                }
+
+                if (password === "") {
+                    $("#passwordAlert").removeClass("hidden").text("Please enter your password.");
+                } else if (password.length < 6) {
+                    $("#passwordAlert").removeClass("hidden").text("Password should be at least 6 characters.");
+                }
+
+                if (username !== "" && password !== "" && password.length >= 6) {
+                  Toastify({
+                        text: "Logged in successfully!",
+                        duration: 3000, 
+                        gravity: "bottom", 
+                        position: "center", 
+                        backgroundColor: "#4caf50", 
+                    }).showToast();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
